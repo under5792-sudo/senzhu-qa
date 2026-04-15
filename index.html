@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>森築美居 · 客服智能問答系統</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f4f1ec; --surface: #fff; --primary: #2d4a2f; --primary-light: #3d5c3f;
+    --accent: #8fba8f; --accent-light: #e4f0e4; --text: #222; --text-sub: #666;
+    --text-muted: #aaa; --border: #e2ddd6; --danger: #c0392b; --danger-bg: #fff0f0;
+    --ai: #1a5276; --ai-bg: #eaf4fb; --gold: #b8860b; --gold-bg: #fffbf0;
+  }
+  body { font-family: 'Noto Sans TC','Microsoft JhengHei',sans-serif; background: var(--bg); min-height: 100vh; color: var(--text); }
+
+  /* Header */
+  .header { background: linear-gradient(100deg,var(--primary) 0%,var(--primary-light) 100%); padding: 16px 28px; display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 16px rgba(0,0,0,.18); }
+  .logo { width: 40px; height: 40px; border-radius: 10px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: var(--primary); flex-shrink: 0; }
+  .header-title { color: #f0ece4; font-size: 17px; font-weight: 700; letter-spacing: 1px; }
+  .header-sub { color: var(--accent); font-size: 11px; margin-top: 2px; }
+  .header-count { margin-left: auto; color: var(--accent); font-size: 12px; background: rgba(255,255,255,.1); padding: 4px 12px; border-radius: 20px; }
+
+  /* Tabs */
+  .tabs { display: flex; background: var(--primary); padding-left: 16px; }
+  .tab-btn { padding: 12px 24px; cursor: pointer; font-size: 14px; font-weight: 600; color: #7a9b7d; border: none; background: none; outline: none; border-bottom: 2px solid transparent; transition: all .2s; font-family: inherit; }
+  .tab-btn.active { color: #f0ece4; border-bottom-color: var(--accent); }
+
+  /* Body */
+  .body { padding: 24px 28px; max-width: 860px; margin: 0 auto; }
+
+  /* Cards */
+  .card { background: var(--surface); border-radius: 12px; padding: 22px; box-shadow: 0 2px 14px rgba(0,0,0,.06); margin-bottom: 20px; }
+
+  /* Form */
+  .form-label { font-size: 12px; color: var(--text-sub); font-weight: 600; margin-bottom: 7px; display: block; }
+  textarea, input[type=text], select { width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 13px; font-size: 14px; font-family: inherit; color: var(--text); outline: none; background: var(--surface); transition: border-color .2s; }
+  textarea:focus, input[type=text]:focus, select:focus { border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 90px; }
+
+  /* Buttons */
+  .btn { padding: 9px 18px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; font-family: inherit; transition: all .2s; }
+  .btn-primary { background: linear-gradient(135deg,var(--primary),var(--primary-light)); color: #fff; box-shadow: 0 2px 8px rgba(45,74,47,.25); }
+  .btn-primary:hover { opacity: .9; transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+  .btn-ghost { background: var(--accent-light); color: var(--primary); border: 1px solid var(--accent); }
+  .btn-ghost:hover { background: var(--accent); color: #fff; }
+  .btn-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid #f5c6c6; }
+  .btn-default { background: #f5f5f5; color: #555; border: 1px solid var(--border); }
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+
+  /* Result cards */
+  .result-card { border-radius: 12px; padding: 22px 20px 18px; margin-bottom: 16px; position: relative; border: 1.5px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.04); animation: fadeUp .3s ease forwards; }
+  .result-card.rank-1 { background: var(--accent-light); border-color: var(--accent); box-shadow: 0 4px 18px rgba(143,186,143,.22); }
+  .result-card.rank-ai { background: var(--ai-bg); border-color: #aed6f1; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+  .rank-badge { position: absolute; top: -11px; left: 16px; border-radius: 20px; padding: 3px 12px; font-size: 11px; font-weight: 700; color: #fff; }
+  .r1 { background: var(--primary); } .r2 { background: #7a9b7d; } .r3 { background: #aaa; } .rai { background: var(--ai); }
+  .cat-tag { display: inline-block; border-radius: 20px; padding: 2px 11px; font-size: 11px; font-weight: 600; margin-bottom: 10px; }
+  .cat-tag.db { background: var(--accent-light); color: var(--primary-light); border: 1px solid var(--accent); }
+  .cat-tag.ai { background: var(--ai-bg); color: var(--ai); border: 1px solid #aed6f1; }
+  .q-text { font-size: 12px; color: var(--text-sub); margin-bottom: 7px; }
+  .a-text { font-size: 14px; color: var(--text); line-height: 1.8; white-space: pre-wrap; }
+  .reason-text { font-size: 12px; font-style: italic; margin-top: 9px; }
+  .reason-db { color: #7a9b7d; } .reason-ai { color: var(--ai); }
+  .action-row { display: flex; gap: 8px; margin-top: 13px; flex-wrap: wrap; }
+  .fix-box { background: var(--gold-bg); border: 1.5px solid #f0d080; border-radius: 8px; padding: 14px; margin-top: 13px; }
+  .fix-title { font-size: 12px; color: var(--gold); font-weight: 700; margin-bottom: 9px; }
+
+  /* 管理 */
+  .stats-bar { background: var(--surface); border-radius: 10px; padding: 14px 20px; margin-bottom: 18px; display: flex; gap: 22px; flex-wrap: wrap; box-shadow: 0 1px 6px rgba(0,0,0,.05); }
+  .stat-n { font-size: 20px; font-weight: 700; color: var(--primary-light); }
+  .stat-l { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .filter-row { display: flex; gap: 7px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-btn { padding: 6px 14px; border-radius: 20px; border: none; cursor: pointer; font-size: 12px; font-weight: 600; font-family: inherit; background: #f0ece4; color: #666; transition: all .2s; }
+  .filter-btn.active { background: var(--primary); color: #fff; }
+  .qa-row { background: var(--surface); border-radius: 10px; padding: 15px 18px; margin-bottom: 10px; box-shadow: 0 1px 6px rgba(0,0,0,.05); display: flex; align-items: flex-start; gap: 14px; }
+  .qa-content { flex: 1; min-width: 0; }
+  .qa-q { font-size: 13px; font-weight: 600; color: var(--text); }
+  .qa-a { font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-top: 4px; }
+  .qa-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+  .add-form { background: var(--surface); border-radius: 12px; padding: 22px; box-shadow: 0 2px 14px rgba(0,0,0,.07); margin-bottom: 20px; border: 1.5px solid var(--accent); }
+  .toolbar { display: flex; justify-content: space-between; margin-bottom: 14px; gap: 10px; align-items: center; }
+  .empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); font-size: 14px; }
+  .empty-icon { font-size: 32px; margin-bottom: 12px; }
+  .loading { text-align: center; padding: 44px; color: var(--primary-light); }
+  .loading-icon { font-size: 32px; margin-bottom: 12px; animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--primary); color: #fff; border-radius: 10px; padding: 12px 20px; font-size: 13px; font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,.2); z-index: 999; animation: slideIn .3s ease; }
+  @keyframes slideIn { from { transform: translateX(100px); opacity:0; } to { transform: translateX(0); opacity:1; } }
+  @media (max-width: 600px) { .body { padding: 16px; } .header { padding: 14px 16px; } .tabs { padding-left: 8px; } .tab-btn { padding: 10px 16px; font-size: 13px; } }
+</style>
+</head>
+<body>
+
+<!-- ⚙️ 部署後請將下方 WORKER_URL 改成你的 Cloudflare Worker 網址 -->
+<script>
+  // ★★★ 在這裡填入你的 Worker 網址 ★★★
+  // 部署後格式類似：https://senzhu-qa.your-name.workers.dev
+  const WORKER_URL = 'https://calm-cloud-086e.under5792.workers.dev';
+</script>
+
+<div class="toast" id="toast" style="display:none"></div>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">森</div>
+  <div>
+    <div class="header-title">森築美居 · 客服智能問答系統</div>
+    <div class="header-sub">AI語意比對 · 品牌語氣推理 · 即時修正學習</div>
+  </div>
+  <div class="header-count" id="headerCount">0 筆問答</div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab-btn active" id="tabSearch" onclick="switchTab('search')">🔍 查詢問題</button>
+  <button class="tab-btn" id="tabManage" onclick="switchTab('manage')">📚 管理資料庫</button>
+</div>
+
+<div class="body">
+  <!-- 查詢 -->
+  <div id="panelSearch">
+    <div class="card">
+      <label class="form-label">貼上顧客問題</label>
+      <textarea id="queryInput" placeholder="例：木頭地板可以做鍍膜嗎？想全室保護但預算有限..."></textarea>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+        <span style="font-size:12px;color:var(--text-muted)">Ctrl+Enter 快速送出</span>
+        <button class="btn btn-primary" id="searchBtn" onclick="handleSearch()">🤖 取得建議回答</button>
+      </div>
+    </div>
+    <div id="resultsArea"></div>
+  </div>
+
+  <!-- 管理 -->
+  <div id="panelManage" style="display:none">
+    <div class="stats-bar" id="statsBar"></div>
+    <div class="toolbar">
+      <input type="text" style="max-width:220px" id="manageSearch" placeholder="🔍 搜尋關鍵字..." oninput="renderManage()">
+      <button class="btn btn-primary" onclick="toggleAddForm()">＋ 新增問答</button>
+    </div>
+    <div class="add-form" id="addForm" style="display:none">
+      <div style="font-size:14px;font-weight:700;color:var(--primary-light);margin-bottom:16px">新增問答</div>
+      <div style="margin-bottom:10px">
+        <label class="form-label">分類</label>
+        <select id="newCat" style="width:auto">
+          <option>產品原理</option><option>安全疑慮</option><option>適用對象</option>
+          <option>施作流程</option><option>保固問題</option><option>價格費用</option>
+          <option>話術腳本</option><option selected>其他</option>
+        </select>
+      </div>
+      <div style="margin-bottom:10px">
+        <label class="form-label">問題</label>
+        <input type="text" id="newQ" placeholder="顧客常問的問題">
+      </div>
+      <div style="margin-bottom:14px">
+        <label class="form-label">標準回答</label>
+        <textarea id="newA" style="min-height:80px" placeholder="標準回答內容"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn btn-default" onclick="toggleAddForm()">取消</button>
+        <button class="btn btn-primary" onclick="handleAdd()">✅ 儲存</button>
+      </div>
+    </div>
+    <div class="filter-row" id="filterRow"></div>
+    <div id="qaList"></div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'senzhu_qa_v2';
+const CATEGORIES = ['全部','產品原理','安全疑慮','適用對象','施作流程','保固問題','價格費用','話術腳本','其他'];
+const DEFAULT_QA = [
+  {id:1,category:'產品原理',question:'鍍膜和一般清潔劑或自己DIY的差在哪裡？',answer:'自己DIY的鍍膜液通常只停留在表面，幾週就揮發掉了。我們使用的是奈米級陶瓷鍍膜，會和建材表面產生化學鍵結，形成6H硬度的保護層，撥水角度達106.4°，這是DIY產品無法達到的效果，也是我們有辦法提供2–3年保固的原因。'},
+  {id:2,category:'產品原理',question:'鍍膜效果能維持多久？',answer:'一般玻璃鍍膜約2年；搭配定期保養方案可延長至3年。效果持續度也跟日常清潔方式有關——建議用中性清潔劑，避免強酸強鹼，才能讓鍍膜效果最大化。'},
+  {id:3,category:'產品原理',question:'鍍膜跟貼膜有什麼不同？',answer:'鍍膜是把液體塗在建材表面，固化後形成透明保護層，不改變外觀，適合玻璃、磁磚、不鏽鋼、石材。貼膜是物理性貼上一層薄膜，可以做隔熱、防爆、防刮效果，通常用在窗戶玻璃。兩者可以同時施作，功能互補唷！'},
+  {id:4,category:'安全疑慮',question:'家裡有小孩、孕婦、或寵物，施作安全嗎？',answer:'我們使用的鍍膜藥劑通過SGS / ROHS認證，低氣味、無毒，施作完乾燥後（約2–4小時）即可安心入住，完全沒有問題 😊 施作當天建議暫時通風，人不在場更理想，但並非必要。'},
+  {id:5,category:'安全疑慮',question:'施作完多久可以碰水或正常使用？',answer:'建議施作後靜置4–6小時再碰水，讓鍍膜完全固化。玻璃建議隔天再沖水效果最好。廚房流理台建議4小時後再使用。'},
+  {id:6,category:'適用對象',question:'我家不是新屋，舊屋可以做嗎？',answer:'當然可以！只是屋齡較長或已有明顯水垢的表面，施作前需要先做深度清潔，清除現有污垢後，鍍膜才能完整附著。如有這個狀況，師傅到府評估時會說明並給您估價，清潔費用會另計。'},
+  {id:7,category:'適用對象',question:'可以只做浴室，不用全室嗎？',answer:'完全可以！我們的方案可以依需求客製，從單一浴室玻璃（基礎方案 $3,499起）到全室都有。很多客人會先從浴室做起感受效果，再決定要不要擴大範圍。'},
+  {id:8,category:'施作流程',question:'施作要多久？我需要在家嗎？',answer:'時間依範圍而定：單一浴室約1–1.5小時；全室約3–5小時。施作時需要有人在家，師傅完工後會請您驗收確認，再離開。'},
+  {id:9,category:'施作流程',question:'師傅到府評估完，一定要當場決定嗎？',answer:'不用！師傅只是幫您丈量和評估，報價後您可以帶著報價單回去考慮，完全沒有壓力。如果方案需要調整，後續再跟客服討論也沒問題唷！'},
+  {id:10,category:'保固問題',question:'保固期間效果消退或出現問題，怎麼處理？',answer:'請直接傳照片給我們的LINE客服，我們會先線上診斷，如果確認是施作問題，我們安排師傅免費回訪補強，不需要額外費用。這是我們的承諾 🙂'},
+  {id:11,category:'價格費用',question:'有辦法先估個大概價格嗎？',answer:'可以給您一個方向：基礎方案從 $3,499 起（約為單一衛浴空間），全室方案從 $9,999 起。實際費用跟坪數、材質種類有關，差異可能不小，所以建議讓師傅到府丈量後給您最準確的報價，而且評估完全免費唷！'},
+  {id:12,category:'價格費用',question:'有沒有分期或優惠？',answer:'目前沒有分期服務。如果是新屋交屋或新裝潢的客人，我們偶爾會有季節性方案，可以加我們LINE官方帳號訂閱通知，有活動第一時間會通知您唷！'},
+  {id:13,category:'話術腳本',question:'客戶說「太貴了」怎麼回？',answer:'我完全理解！其實很多客人一開始也這樣想 😊 我跟您說一個角度：您家裝潢的成本通常是幾十萬起，鍍膜是讓這個投資的效果維持3年不變色、不水垢的保護層，以整體比例來看其實很划算。而且我們有保固，做完如果效果不如預期，我們會免費回來處理。如果現在整套做有壓力，也可以先從浴室玻璃開始，感受一下效果，再看要不要擴大範圍，完全沒關係唷！'},
+  {id:14,category:'話術腳本',question:'客戶說「我再想想」怎麼跟進？',answer:'完全沒問題！您慢慢考慮唷 😊 我這邊幫您記錄起來，評估是完全免費的，約了不喜歡也不用做。有任何問題隨時傳訊息給我！（3天後追蹤）嗨嗨～之前有詢問過居家鍍膜的您，不知道考慮得怎麼樣了呢？最近新屋交屋季我們師傅檔期比較緊，如果有需要的話可以先幫您保留一個時段唷！'},
+  {id:15,category:'話術腳本',question:'完工後客戶反應沒有效果怎麼辦？',answer:'謝謝您告訴我！我很認真看待這個反饋 🙏 請問方便傳一張玻璃目前的照片給我看看嗎？我先幫您確認一下狀況，通常水垢需要2–3天才會完全看出撥水效果。（看照片後）我幫您安排師傅回去看一下，這是在我們的保固範圍內，不用擔心費用的問題，麻煩您告訴我方便的時間唷！'},
+  {id:16,category:'話術腳本',question:'客戶在台中或雙北，怎麼引導預約？',answer:'好消息是，您在我們的服務範圍內，我們提供完全免費的到府丈量評估唷！😊 師傅會根據您家的坪數、材質和屋況，在現場給您最準確的報價，通常評估時間大約30–40分鐘。方便的話，我幫您安排一個時段，請問您平日還是週末比較方便呢？'},
+  {id:17,category:'話術腳本',question:'客戶在外縣市（非台中/雙北）怎麼引導？',answer:'您好！目前我們在您所在的地區暫時沒有安排到府評估的服務，不過可以透過線上方式幫您估價唷！最常見的需求是浴室玻璃拉門鍍膜，只要幫我量一下玻璃的寬度和高度（公分），我就可以幫您報價囉 📐 有問題我們可以視訊協助您唷 😊'},
+];
+
+const BRAND_CONTEXT = `你是森築美居的AI客服助理。品牌資訊：
+【公司】森築美居，居家鍍膜/貼膜/防黴，台中（總部）、台北（衛星點），其他縣市線上報價
+【產品】奈米級陶瓷鍍膜，6H硬度，撥水角106.4°，SGS/ROHS認證，保固2~3年
+【價格】基礎方案$3,499起；全室$9,999起；年度保養$2,800起；評估免費
+【施作】完成4~6小時可碰水；舊屋需先清潔；台中/台北免費到府；外縣市客戶自丈量
+【語氣】親切有溫度，不強硬推銷，先同理再給方案，可用😊等表情，繁體中文`;
+
+let qaList = [], filterCat = '全部', editItemId = null;
+
+// Init
+window.addEventListener('DOMContentLoaded', () => {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  qaList = stored ? JSON.parse(stored) : [...DEFAULT_QA];
+  if (!stored) saveList();
+  updateHeaderCount();
+  renderManage();
+  document.getElementById('queryInput').addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === 'Enter') handleSearch();
+  });
+});
+
+function saveList() { localStorage.setItem(STORAGE_KEY, JSON.stringify(qaList)); updateHeaderCount(); }
+function updateHeaderCount() { document.getElementById('headerCount').textContent = qaList.length + ' 筆問答'; }
+function switchTab(tab) {
+  document.getElementById('panelSearch').style.display = tab === 'search' ? '' : 'none';
+  document.getElementById('panelManage').style.display = tab === 'manage' ? '' : 'none';
+  document.getElementById('tabSearch').className = 'tab-btn' + (tab === 'search' ? ' active' : '');
+  document.getElementById('tabManage').className = 'tab-btn' + (tab === 'manage' ? ' active' : '');
+  if (tab === 'manage') renderManage();
+}
+
+// 查詢
+async function handleSearch() {
+  const query = document.getElementById('queryInput').value.trim();
+  if (!query) return;
+  const btn = document.getElementById('searchBtn');
+  btn.disabled = true; btn.textContent = '⏳ AI 比對中...';
+  document.getElementById('resultsArea').innerHTML = `<div class="loading"><div class="loading-icon">🔄</div><div>正在從資料庫語意比對，資料庫沒有的會即時推理...</div></div>`;
+
+  try {
+    const dbText = qaList.map((q,i) => `[IDX:${i}] [${q.category}] Q:${q.question} | A:${q.answer}`).join('\n');
+    const resp = await fetch(WORKER_URL + '/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system: `${BRAND_CONTEXT}\n\n任務：根據顧客問題從Q&A資料庫找最相關的前3筆。只回傳純JSON，不加任何其他文字或markdown：{"db_matches":[{"index":數字,"reason":"推薦原因15字內"}],"ai_answer":"若無相關則填AI即時回答否則空字串","ai_needed":true或false}`,
+        userMessage: `顧客問題：「${query}」\n\nQ&A資料庫：\n${dbText}`
+      })
+    });
+    const data = await resp.json();
+    const raw = data.text || '{}';
+    const parsed = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    const dbResults = (parsed.db_matches||[]).slice(0,3).map((r,i) => ({...qaList[r.index],reason:r.reason,rank:i+1,type:'db',dbIdx:r.index})).filter(r=>r.question);
+    const aiResult = (parsed.ai_needed && parsed.ai_answer) ? [{id:'ai-'+Date.now(),category:'AI即時',question:query,answer:parsed.ai_answer,reason:'資料庫無完全符合，AI依品牌知識推理',rank:dbResults.length+1,type:'ai'}] : [];
+    renderResults([...dbResults,...aiResult]);
+  } catch(e) {
+    document.getElementById('resultsArea').innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div>查詢失敗，請確認 Worker 網址是否正確。</div>`;
+  }
+  btn.disabled = false; btn.textContent = '🤖 取得建議回答';
+}
+
+function renderResults(results) {
+  if (!results.length) { document.getElementById('resultsArea').innerHTML = `<div class="empty-state"><div class="empty-icon">😕</div>找不到相關回答，建議新增這題到資料庫</div>`; return; }
+  document.getElementById('resultsArea').innerHTML = results.map((r,ri) => {
+    const isAI = r.type==='ai', isFirst = r.rank===1;
+    return `<div class="result-card ${isAI?'rank-ai':isFirst?'rank-1':''}">
+      <div class="rank-badge ${isAI?'rai':isFirst?'r1':r.rank===2?'r2':'r3'}">${isAI?'🤖 AI即時推理':isFirst?'🥇 最推薦':r.rank===2?'🥈 第二選擇':'🥉 備選'}</div>
+      <div style="margin-top:10px">
+        <span class="cat-tag ${isAI?'ai':'db'}">${isAI?'⚡ AI生成':'📖 '+r.category}</span>
+        ${!isAI?`<div class="q-text">Q：${escHtml(r.question)}</div>`:''}
+        <div class="a-text" id="atext-${ri}">${escHtml(r.answer)}</div>
+        <div class="reason-text ${isAI?'reason-ai':'reason-db'}">💡 ${escHtml(r.reason)}</div>
+        <div class="action-row">
+          <button class="btn btn-ghost btn-sm" onclick="copyText('atext-${ri}',this)">📋 複製</button>
+          ${isAI?`<button class="btn btn-ghost btn-sm" onclick='saveAIResult(${JSON.stringify(r)})'>💾 存入資料庫</button>`:''}
+          <button class="btn btn-danger btn-sm" onclick="toggleFix(${ri},this)">✏️ 修正答案</button>
+        </div>
+        <div class="fix-box" id="fixbox-${ri}" style="display:none">
+          <div class="fix-title">✏️ 修正後答案（儲存後將${isAI?'新增到資料庫':'更新資料庫原有答案'}）</div>
+          <textarea id="fixtext-${ri}" style="min-height:80px;margin-bottom:10px">${escHtml(r.answer)}</textarea>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-primary" onclick='saveFix(${ri},${JSON.stringify(r)})'>✅ 儲存修正</button>
+            <button class="btn btn-default" onclick="document.getElementById('fixbox-${ri}').style.display='none'">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function copyText(id,btn) {
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{
+    btn.textContent='✅ 已複製'; setTimeout(()=>btn.textContent='📋 複製',2000);
+  });
+}
+function toggleFix(ri) { const b=document.getElementById('fixbox-'+ri); b.style.display=b.style.display==='none'?'':'none'; }
+function saveFix(ri,r) {
+  const a=document.getElementById('fixtext-'+ri).value.trim(); if(!a) return;
+  if(r.type==='db'&&r.dbIdx!==undefined) qaList[r.dbIdx].answer=a;
+  else qaList.push({id:Date.now(),category:'其他',question:r.question,answer:a});
+  saveList(); document.getElementById('atext-'+ri).textContent=a; document.getElementById('fixbox-'+ri).style.display='none';
+  showToast('✅ 已儲存修正！資料庫已更新。');
+}
+function saveAIResult(r) {
+  qaList.push({id:Date.now(),category:'其他',question:r.question,answer:r.answer});
+  saveList(); showToast('✅ 已存入資料庫！');
+}
+
+// 管理
+function renderManage() {
+  const counts={};
+  qaList.forEach(q=>{counts[q.category]=(counts[q.category]||0)+1;});
+  document.getElementById('statsBar').innerHTML=`<div><div class="stat-n">${qaList.length}</div><div class="stat-l">總問答數</div></div>`+Object.entries(counts).map(([c,n])=>`<div><div class="stat-n" style="font-size:17px">${n}</div><div class="stat-l">${c}</div></div>`).join('');
+  document.getElementById('filterRow').innerHTML=CATEGORIES.map(c=>`<button class="filter-btn ${filterCat===c?'active':''}" onclick="setFilter('${c}')">${c}${c!=='全部'&&counts[c]?' ('+counts[c]+')':''}</button>`).join('');
+  const kw=document.getElementById('manageSearch')?.value||'';
+  const items=qaList.filter(q=>(filterCat==='全部'||q.category===filterCat)&&(!kw||q.question.includes(kw)||q.answer.includes(kw)));
+  if(!items.length){document.getElementById('qaList').innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div>這個分類還沒有問答</div>`;return;}
+  document.getElementById('qaList').innerHTML=items.map(q=>{
+    const isEdit=editItemId===q.id;
+    return `<div class="qa-row"><div class="qa-content">${isEdit?`
+      <div style="margin-bottom:8px"><select id="ec-${q.id}" style="width:auto">${CATEGORIES.filter(c=>c!=='全部').map(c=>`<option${c===q.category?' selected':''}>${c}</option>`).join('')}</select></div>
+      <input type="text" id="eq-${q.id}" value="${escHtml(q.question)}" style="margin-bottom:8px">
+      <textarea id="ea-${q.id}" style="min-height:70px">${escHtml(q.answer)}</textarea>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn btn-primary" onclick="handleUpdate(${q.id})">✅ 儲存</button>
+        <button class="btn btn-default" onclick="cancelEdit()">取消</button>
+      </div>
+    `:`
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <span class="cat-tag db" style="margin-bottom:0">#${q.category}</span>
+        <span class="qa-q">${escHtml(q.question)}</span>
+      </div>
+      <div class="qa-a">${escHtml(q.answer)}</div>
+    `}</div>${!isEdit?`<div class="qa-actions">
+      <button class="btn btn-default btn-sm" onclick="startEdit(${q.id})">✏️ 編輯</button>
+      <button class="btn btn-danger btn-sm" onclick="handleDelete(${q.id})">🗑️ 刪除</button>
+    </div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function setFilter(c){filterCat=c;renderManage();}
+function toggleAddForm(){const f=document.getElementById('addForm');f.style.display=f.style.display==='none'?'':'none';editItemId=null;}
+function handleAdd(){
+  const q=document.getElementById('newQ').value.trim(),a=document.getElementById('newA').value.trim();
+  if(!q||!a){showToast('⚠️ 請填寫問題和回答');return;}
+  qaList.push({id:Date.now(),category:document.getElementById('newCat').value,question:q,answer:a});
+  saveList();document.getElementById('newQ').value='';document.getElementById('newA').value='';
+  document.getElementById('addForm').style.display='none';renderManage();showToast('✅ 新增成功！');
+}
+function startEdit(id){editItemId=id;renderManage();}
+function cancelEdit(){editItemId=null;renderManage();}
+function handleUpdate(id){
+  const i=qaList.findIndex(q=>q.id===id);if(i<0)return;
+  qaList[i]={...qaList[i],category:document.getElementById('ec-'+id).value,question:document.getElementById('eq-'+id).value.trim(),answer:document.getElementById('ea-'+id).value.trim()};
+  saveList();editItemId=null;renderManage();showToast('✅ 已更新！');
+}
+function handleDelete(id){
+  if(!confirm('確定刪除這筆問答嗎？'))return;
+  qaList=qaList.filter(q=>q.id!==id);saveList();renderManage();showToast('🗑️ 已刪除');
+}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='';setTimeout(()=>t.style.display='none',2800);}
+</script>
+</body>
+</html>
