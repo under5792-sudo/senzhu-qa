@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)file:///C:/Users/User-0821/Downloads/index_5.html -->
+<html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>森築美居 · 客服系統</title>
+<link href="./森築美居 · 客服系統_files/css2" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f1ec;--sur:#fff;--pri:#2d4a2f;--priL:#3d5c3f;
+  --acc:#8fba8f;--accL:#e4f0e4;--tx:#222;--txS:#666;--txM:#aaa;
+  --bd:#e2ddd6;--dan:#c0392b;--danB:#fff0f0;
+  --gld:#b8860b;--gldB:#fffbf0;--ai:#1a5276;--aiB:#eaf4fb;
+  --ok:#27ae60;--okB:#eafaf1;--wa:#e67e22;--waB:#fef9e7;
+}
+body{font-family:'Noto Sans TC','Microsoft JhengHei',sans-serif;background:var(--bg);min-height:100vh;color:var(--tx)}
+.hdr{background:linear-gradient(100deg,var(--pri),var(--priL));padding:13px 18px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.18);flex-wrap:wrap}
+.logo{width:36px;height:36px;border-radius:9px;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--pri);flex-shrink:0}
+.hdr-title{color:#f0ece4;font-size:15px;font-weight:700;letter-spacing:1px}
+.hdr-sub{color:var(--acc);font-size:11px;margin-top:1px}
+.hdr-btns{margin-left:auto;display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.hbtn{padding:3px 10px;border-radius:20px;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.6);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
+.hbtn.active{border-color:#fff;background:rgba(255,255,255,.2);color:#fff}
+.tabs{display:flex;background:var(--pri);padding-left:10px;overflow-x:auto}
+.tab{padding:10px 16px;cursor:pointer;font-size:13px;font-weight:600;color:#7a9b7d;border:none;background:none;outline:none;border-bottom:2px solid transparent;font-family:inherit;white-space:nowrap;transition:all .2s}
+.tab.active{color:#f0ece4;border-bottom-color:var(--acc)}
+.body{padding:16px 18px;max-width:880px;margin:0 auto}
+.card{background:var(--sur);border-radius:12px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:14px}
+.lbl{font-size:12px;color:var(--txS);font-weight:600;margin-bottom:6px;display:block}
+textarea,input[type=text],input[type=date],select{width:100%;border:1.5px solid var(--bd);border-radius:8px;padding:8px 12px;font-size:14px;font-family:inherit;color:var(--tx);outline:none;background:var(--sur);transition:border-color .2s}
+textarea{resize:vertical;min-height:80px}
+textarea:focus,input:focus,select:focus{border-color:var(--acc)}
+.btn{padding:8px 15px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;transition:all .2s}
+.btn-pri{background:linear-gradient(135deg,var(--pri),var(--priL));color:#fff;box-shadow:0 2px 8px rgba(45,74,47,.25)}
+.btn-ghost{background:var(--accL);color:var(--pri);border:1px solid var(--acc)}
+.btn-danger{background:var(--danB);color:var(--dan);border:1px solid #f5c6c6}
+.btn-ok{background:var(--okB);color:var(--ok);border:1px solid #a9dfbf}
+.btn-warn{background:var(--waB);color:var(--wa);border:1px solid #f9d79b}
+.btn-ai{background:var(--aiB);color:var(--ai);border:1px solid #aed6f1}
+.btn-def{background:#f5f5f5;color:#555;border:1px solid var(--bd)}
+.btn-sm{padding:5px 10px;font-size:12px}
+.frow{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap}
+.fbtn{padding:5px 12px;border-radius:20px;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;background:#f0ece4;color:#666;transition:all .2s}
+.fbtn.active{background:var(--pri);color:#fff}
+.row{background:var(--sur);border-radius:10px;padding:13px 15px;margin-bottom:8px;box-shadow:0 1px 6px rgba(0,0,0,.05);display:flex;align-items:flex-start;gap:11px}
+.tag{display:inline-block;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:600;margin-bottom:6px}
+.tag-db{background:var(--accL);color:var(--priL);border:1px solid var(--acc)}
+.tag-ai{background:var(--aiB);color:var(--ai);border:1px solid #aed6f1}
+.pill{display:inline-block;border-radius:12px;padding:1px 7px;font-size:10px;font-weight:700;margin-left:3px}
+.rcard{border-radius:12px;padding:20px 16px 15px;margin-bottom:13px;position:relative;border:1.5px solid var(--bd);box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.rcard.r1{background:var(--accL);border-color:var(--acc);box-shadow:0 4px 16px rgba(143,186,143,.2)}
+.rcard.rai{background:var(--aiB);border-color:#aed6f1}
+.badge{position:absolute;top:-10px;left:12px;border-radius:20px;padding:2px 10px;font-size:11px;font-weight:700;color:#fff}
+.fixbox{background:var(--gldB);border:1.5px solid #f0d080;border-radius:8px;padding:13px;margin-top:11px}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--pri);color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;z-index:999;box-shadow:0 4px 16px rgba(0,0,0,.2);display:none}
+.loading{text-align:center;padding:40px;color:var(--priL)}
+.loading-spin{font-size:26px;margin-bottom:10px;animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sync-bar{background:var(--aiB);border:1px solid #aed6f1;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;color:var(--ai);display:flex;align-items:center;gap:8px}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:11px;margin-bottom:18px}
+.stat-card{background:var(--sur);border-radius:12px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.05);text-align:center}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="hdr">
+  <div class="logo">森</div>
+  <div>
+    <div class="hdr-title">森築美居 · 客服系統</div>
+    <div class="hdr-sub">AI語意比對 · 品牌知識 · 回訪管理 · 雲端同步</div>
+  </div>
+  <div class="hdr-btns">
+    <div id="rgBtns"><button class="hbtn active" onclick="setRegion(&#39;通用&#39;)">通用</button><button class="hbtn " onclick="setRegion(&#39;台中&#39;)">台中</button><button class="hbtn " onclick="setRegion(&#39;台北&#39;)">台北</button></div>
+    <div style="width:1px;height:18px;background:rgba(255,255,255,.2);margin:0 3px"></div>
+    <div id="svBtns"><button class="hbtn active" onclick="setSvc(&#39;通用&#39;)">通用</button><button class="hbtn " onclick="setSvc(&#39;鍍膜&#39;)">鍍膜</button><button class="hbtn " onclick="setSvc(&#39;貼膜&#39;)">貼膜</button></div>
+  </div>
+</div>
+
+<div class="tabs" id="tabBar"><button class="tab active" onclick="switchTab(&#39;search&#39;)">🔍 查詢</button><button class="tab " onclick="switchTab(&#39;db&#39;)">📚 資料庫</button><button class="tab " onclick="switchTab(&#39;followup&#39;)">🔔 回訪</button><button class="tab " onclick="switchTab(&#39;knowledge&#39;)">📘 品牌知識</button><button class="tab " onclick="switchTab(&#39;dashboard&#39;)">📊 數據</button></div>
+
+<div class="body" id="mainBody">
+  <div class="loading"><div class="loading-spin">🔄</div><div>載入中，從雲端同步資料...</div></div>
+</div>
+
+<script>
+// ── 設定 ──────────────────────────────────────────────────
+const WORKER = 'https://calm-cloud-086e.under5792.workers.dev';
+const TABS = [['search','🔍 查詢'],['db','📚 資料庫'],['followup','🔔 回訪'],['knowledge','📘 品牌知識'],['dashboard','📊 數據']];
+const CATS = ['全部','產品原理','安全疑慮','適用對象','施作流程','保固問題','價格費用','話術腳本','其他'];
+const REGIONS = ['通用','台中','台北'];
+const SERVICES = ['通用','鍍膜','貼膜'];
+const KN_CATS = ['產品規格','服務規範','話術規範','價格規範','其他'];
+const FU_DAYS = [1,3,14,180,365];
+const FU_LABELS = {1:'D+1 感謝',3:'D+3 感受',14:'D+14 保養',180:'D+180 半年',365:'D+365 保固到期'};
+const TODAY = new Date().toISOString().split('T')[0];
+
+// ── 狀態 ──────────────────────────────────────────────────
+let tab = 'search', region = '通用', svcF = '通用';
+let qaList = [], stats = [], fus = [], kn = [];
+let query = '', results = null, loading = false, fixIdx = null, fixTxt = '', optimizing = false;
+let qAdd = false, qItem = {cat:'其他',rg:'通用',sv:'通用',q:'',a:''};
+let copied = null, outcomeSet = false;
+let fCat = '全部', fRg = '全部', fSv = '全部', srch = '';
+let showAdd = false, editQ = null, newQ = {cat:'其他',rg:'通用',sv:'通用',q:'',a:''};
+let showAddFu = false, newFu = {name:'',rg:'台中',sv:'鍍膜',date:'',notes:''};
+let fuF = '待處理';
+let showAddKn = false, editKn = null, newKn = {cat:'產品規格',title:'',content:''};
+let syncing = false;
+
+// ── 雲端 DB ───────────────────────────────────────────────
+async function dbRead(key) {
+  try {
+    const r = await fetch(WORKER + '/db', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({action:'read', key})});
+    const val = await r.json();
+    return val ? JSON.parse(val) : null;
+  } catch { return null; }
+}
+async function dbWrite(key, val) {
+  try {
+    await fetch(WORKER + '/db', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({action:'write', key, value: JSON.stringify(val)})});
+  } catch(e) { console.error('dbWrite error', e); }
+}
+
+// ── 預設 QA ───────────────────────────────────────────────
+const DEFAULT_QA = [
+  {id:1,cat:'產品原理',rg:'通用',sv:'鍍膜',q:'鍍膜和DIY的差在哪？',a:'DIY鍍膜液幾週就揮發。我們使用奈米陶瓷鍍膜，與建材化學鍵結，形成6H硬度保護層，撥水角106.4°，才能提供2–3年保固。'},
+  {id:2,cat:'產品原理',rg:'通用',sv:'通用',q:'鍍膜效果能維持多久？',a:'一般玻璃鍍膜約2年；搭配定期保養可延長至3年。建議用中性清潔劑，避免強酸強鹼。'},
+  {id:3,cat:'產品原理',rg:'通用',sv:'通用',q:'鍍膜跟貼膜有什麼不同？',a:'鍍膜是塗液體固化成透明保護層，適合玻璃、磁磚、不鏽鋼、石材，主要功能是撥水防污。貼膜是浴室乾溼分離玻璃專用，日本進口4mil高強度膜，功能是防爆防刮安全防護，保固36個月，沒有隔熱功能。'},
+  {id:4,cat:'安全疑慮',rg:'通用',sv:'鍍膜',q:'家裡有小孩孕婦寵物施作安全嗎？',a:'藥劑通過SGS/ROHS認證，低氣味無毒，施作完2–4小時即可入住。當天通風更好，但並非必要 😊'},
+  {id:5,cat:'安全疑慮',rg:'通用',sv:'通用',q:'施作完多久可以碰水？',a:'建議靜置12小時再碰水。玻璃建議隔天再沖水。廚房流理台4小時後再使用。'},
+  {id:6,cat:'適用對象',rg:'通用',sv:'鍍膜',q:'舊屋可以做嗎？',a:'可以！有明顯水垢的表面需先深度清潔，清除污垢後鍍膜才能完整附著。師傅到府評估時會說明並估清潔費用。'},
+  {id:7,cat:'適用對象',rg:'通用',sv:'通用',q:'可以只做浴室嗎？',a:'完全可以！基礎方案從$3,499起（單一衛浴）。很多客人先從浴室做起感受效果，再決定要不要擴大範圍。'},
+  {id:8,cat:'施作流程',rg:'通用',sv:'通用',q:'施作要多久？需要在家嗎？',a:'單一浴室約1–1.5小時；全室約3–5小時。施作時需要有人在家，師傅完工後請您驗收確認再離開。'},
+  {id:9,cat:'施作流程',rg:'通用',sv:'通用',q:'評估完一定要當場決定嗎？',a:'不用！師傅只是丈量評估，報價後您可以帶著報價單回去考慮，完全沒有壓力 😊'},
+  {id:10,cat:'保固問題',rg:'通用',sv:'通用',q:'保固期內出現問題怎麼辦？',a:'傳照片給LINE客服，我們先線上診斷，確認是施作問題就安排師傅免費回訪補強 🙂'},
+  {id:11,cat:'價格費用',rg:'通用',sv:'通用',q:'大概多少錢？',a:'基礎方案從$3,499起（單一衛浴），全室從$9,999起。實際費用依坪數材質而定，建議讓師傅到府丈量給您最準確的報價，評估完全免費！'},
+  {id:12,cat:'價格費用',rg:'通用',sv:'通用',q:'有分期或優惠嗎？',a:'目前沒有分期。偶爾有季節性方案，可加LINE官方帳號訂閱通知，有活動第一時間通知您！'},
+  {id:13,cat:'話術腳本',rg:'通用',sv:'通用',q:'客戶說太貴了怎麼回？',a:'我完全理解！其實很多客人一開始也這樣想 😊 您家裝潢通常幾十萬起，鍍膜是讓投資效果維持3年不變色不水垢的保護層，比例上很划算。而且有保固，效果不如預期我們免費回來處理。如果整套有壓力，也可以先從浴室開始感受效果 😊'},
+  {id:14,cat:'話術腳本',rg:'通用',sv:'通用',q:'客戶說我再想想怎麼跟進？',a:'完全沒問題！您慢慢考慮 😊 我幫您記錄起來，評估完全免費，約了不喜歡也不用做。（3天後）嗨～之前詢問居家鍍膜的您，最近師傅檔期比較緊，有需要可以先幫您保留一個時段！'},
+  {id:15,cat:'話術腳本',rg:'通用',sv:'通用',q:'完工後客戶說沒效果怎麼辦？',a:'謝謝告訴我，我很認真看待這個反饋 🙏 方便傳一張玻璃的照片嗎？通常水垢需要2–3天才能完全看出撥水效果。（看照片後）我幫您安排師傅回去看，在保固範圍內不用擔心費用，麻煩告訴我方便的時間！'},
+  {id:16,cat:'話術腳本',rg:'台中',sv:'通用',q:'客戶在台中怎麼引導預約？',a:'好消息，您在我們台中服務範圍內，提供完全免費的到府評估！😊 師傅根據坪數材質屋況現場報價，評估約30–40分鐘。我幫您安排一個時段，請問平日還是週末方便呢？'},
+  {id:17,cat:'話術腳本',rg:'台北',sv:'通用',q:'客戶在台北怎麼引導預約？',a:'好消息，您在我們台北服務範圍內，提供完全免費的到府評估！😊 師傅根據坪數材質屋況現場報價，評估約30–40分鐘。我幫您安排一個時段，請問平日還是週末方便呢？'},
+  {id:18,cat:'話術腳本',rg:'通用',sv:'通用',q:'客戶在外縣市怎麼引導？',a:'目前您所在的地區沒有到府評估服務，不過可以透過線上方式估價！最常見是浴室玻璃拉門鍍膜，幫我量一下玻璃的寬×高（公分），我就可以報價囉 📐 有問題也可以視訊協助您 😊'},
+  {id:19,cat:'產品原理',rg:'通用',sv:'貼膜',q:'貼膜可以隔熱嗎？',a:'我們的貼膜目前沒有隔熱功能唷！主要功能是防爆、防刮、安全防護，專為浴室乾溼分離玻璃設計。如果您有隔熱需求，我們可以讓評估師到府了解狀況，看看有什麼合適的方案推薦 😊'},
+  {id:20,cat:'施作流程',rg:'通用',sv:'貼膜',q:'貼膜施作完需要注意什麼？',a:'施作後48小時內避免碰水。初期可能有輕微霧面或小水泡，是正常現象，通常一週內消失。如果一週後仍有問題，直接聯繫我們，保固範圍內免費處理！'},
+];
+
+const DEFAULT_KN = [
+  {id:1,cat:'服務規範',title:'服務地區',content:'服務範圍是台中以南至雲林、台中以北至桃園。台南以南（高雄、屏東等）完全不在服務範圍內，遇到這些地區的客戶直接說明無法提供服務，不要引導估價。'},
+  {id:2,cat:'產品規格',title:'貼膜只適用浴室玻璃',content:'我們的貼膜專為浴室乾溼分離玻璃設計，只適用於浴室玻璃，不適用於窗戶或其他位置。'},
+  {id:3,cat:'產品規格',title:'貼膜無隔熱功能',content:'我們的貼膜沒有隔熱功能。主要功能是防爆、防刮、安全防護。若客戶詢問隔熱，說明我們目前沒有提供隔熱膜服務。'},
+  {id:4,cat:'產品規格',title:'4mil是高強度厚膜',content:'4mil是專業級高強度厚膜，不是薄膜。這個厚度讓玻璃破裂時碎片不四散，保護家人安全。'},
+  {id:5,cat:'服務規範',title:'不在LINE上給確切報價',content:'絕對不在LINE上給確切報價，只給「基礎方案從$3,499起，全室從$9,999起」的範圍，引導到府評估。'},
+  {id:6,cat:'話術規範',title:'回答時不使用Markdown符號',content:'回答時不要使用**粗體**或其他Markdown格式符號，直接用一般文字，因為答案會直接複製到LINE使用。'},
+];
+
+function getBrandCtx() {
+  const knText = kn.length > 0 ? '\n【重要品牌知識，必須遵守】\n' + kn.map(k=>k.title+'：'+k.content).join('\n') : '';
+  return '你是森築美居的AI客服助理。\n【公司】森築美居，居家鍍膜/貼膜/防黴，台中（總部）、台北（衛星點），服務範圍台中以南至雲林、台中以北至桃園，範圍外無法服務\n【產品】奈米陶瓷鍍膜6H硬度撥水角106.4° SGS/ROHS認證保固2~3年；貼膜為浴室專用防爆防刮4mil高強度膜保固36個月無隔熱功能\n【價格】基礎方案$3,499起；全室$9,999起；年度保養$2,800起；評估免費\n【語氣】親切有溫度，不強硬推銷，先同理再給方案，適當使用😊等表情，繁體中文' + knText;
+}
+
+// ── 初始化 ────────────────────────────────────────────────
+async function init() {
+  renderHeader();
+  renderTabs();
+
+  // 從 Google Sheets 載入資料
+  const [qa, st, fu, k] = await Promise.all([
+    dbRead('qa'), dbRead('stats'), dbRead('followups'), dbRead('knowledge')
+  ]);
+  qaList = qa || DEFAULT_QA;
+  stats = st || [];
+  fus = fu || [];
+  kn = k || DEFAULT_KN;
+
+  // 如果是第一次，把預設資料存上去
+  if (!qa) await dbWrite('qa', qaList);
+  if (!k) await dbWrite('knowledge', kn);
+
+  renderAll();
+}
+
+function renderHeader() {
+  document.getElementById('rgBtns').innerHTML = REGIONS.map(r =>
+    '<button class="hbtn '+(region===r?'active':'')+'" onclick="setRegion(\''+r+'\')">'+r+'</button>'
+  ).join('');
+  document.getElementById('svBtns').innerHTML = SERVICES.map(s =>
+    '<button class="hbtn '+(svcF===s?'active':'')+'" onclick="setSvc(\''+s+'\')">'+s+'</button>'
+  ).join('');
+}
+
+function setRegion(r){region=r;renderHeader();renderAll();}
+function setSvc(s){svcF=s;renderHeader();renderAll();}
+
+function renderTabs() {
+  const todayFus = fus.filter(fu => getReminders(fu).some(r => r.isToday||r.overdue));
+  document.getElementById('tabBar').innerHTML = TABS.map(([id,label]) =>
+    '<button class="tab '+(tab===id?'active':'')+'" onclick="switchTab(\''+id+'\')">' +
+    label + (id==='followup'&&todayFus.length>0?' ('+todayFus.length+')':'') + '</button>'
+  ).join('');
+}
+
+function switchTab(t){tab=t;renderTabs();renderAll();}
+
+function renderAll(){
+  if(tab==='search') renderSearch();
+  else if(tab==='db') renderDB();
+  else if(tab==='followup') renderFollowup();
+  else if(tab==='knowledge') renderKnowledge();
+  else if(tab==='dashboard') renderDashboard();
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  setTimeout(()=>t.style.display='none',2500);
+}
+
+async function saveQA(list){qaList=list;await dbWrite('qa',list);showToast('✅ 已同步到雲端！');}
+async function saveSt(list){stats=list;await dbWrite('stats',list);}
+async function saveFu(list){fus=list;await dbWrite('followups',list);renderTabs();renderAll();}
+async function saveKn(list){kn=list;await dbWrite('knowledge',list);showToast('✅ 品牌知識已同步到雲端！');}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function rgStyle(r){return r==='台中'?'background:#fef9e7;color:#b8860b':r==='台北'?'background:#eaf4fb;color:#1a5276':'background:#f0ece4;color:#aaa';}
+function svStyle(s){return s==='鍍膜'?'background:#e4f0e4;color:#3d5c3f':s==='貼膜'?'background:#f5eef8;color:#7d3c98':'background:#f0ece4;color:#aaa';}
+
+// ── AI 查詢 ───────────────────────────────────────────────
+async function handleSearch(){
+  if(!query.trim())return;
+  loading=true;results=null;fixIdx=null;qAdd=false;outcomeSet=false;
+  renderSearch();
+  try{
+    const filtered=qaList.filter(q=>(region==='通用'||q.rg==='通用'||q.rg===region)&&(svcF==='通用'||q.sv==='通用'||q.sv===svcF));
+    const dbTxt=filtered.map((q,i)=>'['+i+']['+q.cat+'/'+q.rg+'/'+q.sv+'] Q:'+q.q+' A:'+q.a).join('\n');
+    const resp=await fetch(WORKER+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({system:getBrandCtx()+'\n目前客服地區：'+region+'，服務類型：'+svcF+'\n\n任務：根據顧客問題從Q&A資料庫找最相關前2筆，再生成至少1個AI推薦答案，共3個。\n規則：\n1.db_matches最多2筆\n2.ai_answers永遠至少1個\n3.ai_answers每個從不同角度切入\n4.所有答案符合森築美居品牌語氣，不使用Markdown符號\n只回傳純JSON：{"db_matches":[{"index":數字,"reason":"原因15字內"}],"ai_answers":[{"answer":"完整回答","angle":"角度10字內"}]}',
+      userMessage:'顧客問題：「'+query+'」\n\nQ&A資料庫：\n'+dbTxt})});
+    const data=await resp.json();
+    const raw=(data.text||'{}').replace(/```json|```/g,'').trim();
+    const parsed=JSON.parse(raw);
+    const dbR=(parsed.db_matches||[]).slice(0,2).map((r,i)=>({...filtered[r.index],reason:r.reason,rank:i+1,type:'db',dbIdx:qaList.indexOf(filtered[r.index])})).filter(r=>r.q);
+    const aiR=(parsed.ai_answers||[]).slice(0,3-dbR.length).map((a,i)=>({id:'ai'+Date.now()+i,cat:'AI生成',rg:region,sv:svcF,q:query,a:a.answer,reason:a.angle||'AI推理',rank:dbR.length+i+1,type:'ai'}));
+    results=[...dbR,...aiR];
+    const newStat={id:Date.now(),q:query,rg:region,sv:svcF,ts:new Date().toISOString(),outcome:null};
+    await saveSt([newStat,...stats].slice(0,500));
+  }catch(e){results=[];}
+  loading=false;renderSearch();
+}
+
+async function handleOutcome(outcome){
+  const updated=stats.map((s,i)=>i===0?{...s,outcome}:s);
+  await saveSt(updated);
+  outcomeSet=true;
+  showToast(outcome==='success'?'🎉 已記錄成交！':outcome==='continue'?'💬 已記錄繼續談':'📝 已記錄沒回應');
+  renderSearch();
+}
+
+function copyAns(idx){
+  const r=results[idx];
+  navigator.clipboard.writeText(r.a).then(()=>{copied=idx;renderSearch();setTimeout(()=>{copied=null;renderSearch();},2000);});
+}
+
+async function saveFixResult(){
+  if(!fixTxt.trim())return;
+  const r=results[fixIdx];
+  if(r.type==='db'&&r.dbIdx>=0){
+    await saveQA(qaList.map((q,i)=>i===r.dbIdx?{...q,a:fixTxt}:q));
+  } else {
+    await saveQA([...qaList,{id:Date.now(),cat:'其他',rg:r.rg||'通用',sv:r.sv||'通用',q:r.q,a:fixTxt}]);
+  }
+  results=results.map((x,i)=>i===fixIdx?{...x,a:fixTxt}:x);
+  fixIdx=null;fixTxt='';renderSearch();
+}
+
+async function optimizeFix(){
+  if(!fixTxt.trim())return;
+  optimizing=true;renderSearch();
+  try{
+    const resp=await fetch(WORKER+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({system:'你是森築美居資深客服。'+getBrandCtx()+'\n請依品牌語氣潤飾回答：親切有溫度、先同理再給方案、適當😊表情、繁體中文、不使用Markdown符號。保留原本資訊，只優化語氣用詞。直接回傳優化後文字，不加說明。',
+      userMessage:'請優化這段客服回答：\n\n'+fixTxt})});
+    const data=await resp.json();
+    const opt=data.text;
+    if(opt)fixTxt=opt.trim();
+  }catch{}
+  optimizing=false;renderSearch();
+}
+
+async function saveAItoDB(idx){
+  const r=results[idx];
+  await saveQA([...qaList,{id:Date.now(),cat:'其他',rg:r.rg||'通用',sv:r.sv||'通用',q:r.q,a:r.a}]);
+}
+
+async function saveQuickAdd(){
+  if(!qItem.q.trim()||!qItem.a.trim())return;
+  await saveQA([...qaList,{...qItem,id:Date.now()}]);
+  qItem={cat:'其他',rg:'通用',sv:'通用',q:'',a:''};qAdd=false;renderSearch();
+}
+
+// ── 渲染查詢 ──────────────────────────────────────────────
+function renderSearch(){
+  const body=document.getElementById('mainBody');
+  if(tab!=='search')return;
+
+  let html='<div class="card">';
+  html+='<div style="display:flex;gap:6px;margin-bottom:10px;align-items:center;font-size:12px;color:var(--txS)">目前模式：';
+  html+='<span class="pill" style="'+rgStyle(region)+'">'+region+'</span>';
+  html+='<span class="pill" style="'+svStyle(svcF)+'">'+svcF+'</span></div>';
+  html+='<label class="lbl">貼上顧客問題</label>';
+  html+='<textarea id="qInput" placeholder="例：我在台南，貼膜可以隔熱嗎？" onkeydown="if(event.ctrlKey&&event.key===\'Enter\')handleSearch()">'+esc(query)+'</textarea>';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">';
+  html+='<span style="font-size:12px;color:var(--txM)">Ctrl+Enter 快速送出</span>';
+  html+='<button class="btn btn-pri" onclick="query=document.getElementById(\'qInput\').value;handleSearch()" '+(loading?'disabled':'')+'>'+(loading?'⏳ AI 比對中...':'🤖 取得建議回答')+'</button></div></div>';
+
+  if(loading){
+    html+='<div class="loading"><div class="loading-spin">🔄</div><div style="font-size:14px">AI 正在分析並生成最佳回答...</div></div>';
+  } else if(results && results.length===0){
+    html+='<div style="text-align:center;padding:40px;color:var(--txM)"><div style="font-size:26px;margin-bottom:10px">😕</div><div>找不到相關回答</div></div>';
+  } else if(results){
+    results.forEach((r,ri)=>{
+      const isAI=r.type==='ai', isR1=r.rank===1;
+      html+='<div class="rcard '+(isAI?'rai':isR1?'r1':'')+'">';
+      html+='<div class="badge" style="background:'+(isAI?'var(--ai)':isR1?'var(--pri)':r.rank===2?'#7a9b7d':'#aaa')+'">'+(isAI?'🤖 AI推薦':isR1?'🥇 最推薦':r.rank===2?'🥈 第二選擇':'🥉 備選')+'</div>';
+      html+='<div style="margin-top:8px">';
+      html+='<div style="display:flex;align-items:center;gap:4px;margin-bottom:7px;flex-wrap:wrap">';
+      html+='<span class="tag '+(isAI?'tag-ai':'tag-db')+'">'+(isAI?'⚡ AI生成':'📖 '+esc(r.cat||''))+'</span>';
+      if(r.rg&&r.rg!=='通用')html+='<span class="pill" style="'+rgStyle(r.rg)+'">'+r.rg+'</span>';
+      if(r.sv&&r.sv!=='通用')html+='<span class="pill" style="'+svStyle(r.sv)+'">'+r.sv+'</span>';
+      html+='</div>';
+      if(!isAI)html+='<div style="font-size:12px;color:var(--txS);margin-bottom:5px">Q：'+esc(r.q)+'</div>';
+      html+='<div id="ans'+ri+'" style="font-size:14px;color:var(--tx);line-height:1.8;white-space:pre-wrap">'+esc(r.a)+'</div>';
+      html+='<div style="font-size:12px;color:'+(isAI?'var(--ai)':'#7a9b7d')+';margin-top:7px;font-style:italic">💡 '+esc(r.reason)+'</div>';
+      html+='<div style="display:flex;gap:6px;margin-top:11px;flex-wrap:wrap">';
+      html+='<button class="btn btn-ghost btn-sm" onclick="copyAns('+ri+')">'+(copied===ri?'✅ 已複製':'📋 複製')+'</button>';
+      if(isAI)html+='<button class="btn btn-ai btn-sm" onclick="saveAItoDB('+ri+')">💾 存入資料庫</button>';
+      html+='<button class="btn btn-danger btn-sm" onclick="fixIdx='+ri+';fixTxt=document.getElementById(\'ans'+ri+'\').innerText;renderSearch()">✏️ 修正答案</button>';
+      html+='</div>';
+      if(fixIdx===ri){
+        html+='<div class="fixbox"><div style="font-size:12px;color:var(--gld);font-weight:700;margin-bottom:7px">✏️ 修正後答案（'+(r.type==='db'?'更新資料庫原有答案':'新增到資料庫')+'）</div>';
+        html+='<textarea id="fixTa" style="min-height:75px;margin-bottom:9px" onchange="fixTxt=this.value" oninput="fixTxt=this.value">'+esc(fixTxt)+'</textarea>';
+        html+='<div style="display:flex;gap:6px;flex-wrap:wrap">';
+        html+='<button class="btn btn-pri" onclick="saveFixResult()">✅ 儲存修正</button>';
+        html+='<button class="btn btn-ai" onclick="fixTxt=document.getElementById(\'fixTa\').value;optimizeFix()">'+(optimizing?'⏳ 優化中...':'✨ AI優化語氣')+'</button>';
+        html+='<button class="btn btn-def" onclick="fixIdx=null;renderSearch()">取消</button></div></div>';
+      }
+      html+='</div></div>';
+    });
+
+    html+='<div class="card" style="background:#fafafa;border:1px solid var(--bd)">';
+    html+='<div style="font-size:13px;font-weight:600;color:var(--txS);margin-bottom:10px">📊 這次對話結果如何？</div>';
+    if(outcomeSet){
+      html+='<div style="color:var(--ok);font-size:13px;font-weight:600">✅ 已記錄，謝謝！</div>';
+    } else {
+      html+='<div style="display:flex;gap:7px;flex-wrap:wrap">';
+      html+='<button class="btn btn-ok" onclick="handleOutcome(\'success\')">✅ 成交了！</button>';
+      html+='<button class="btn btn-warn" onclick="handleOutcome(\'continue\')">💬 繼續在談</button>';
+      html+='<button class="btn btn-danger" onclick="handleOutcome(\'no_reply\')">❌ 沒有回應</button></div>';
+    }
+    html+='</div>';
+
+    if(!qAdd){
+      html+='<button class="btn btn-ghost" style="width:100%;padding:10px;font-size:13px;border-style:dashed" onclick="qAdd=true;qItem.q=query;renderSearch()">＋ 這題沒有好答案？直接新增到資料庫</button>';
+    } else {
+      html+='<div class="card" style="border:1.5px solid var(--acc)">';
+      html+='<div style="font-size:13px;font-weight:700;color:var(--priL);margin-bottom:12px">＋ 新增這題到資料庫</div>';
+      html+='<div style="display:flex;gap:8px;margin-bottom:9px;flex-wrap:wrap">';
+      html+='<div><label class="lbl">分類</label><select onchange="qItem.cat=this.value">'+CATS.filter(c=>c!=='全部').map(c=>'<option'+(qItem.cat===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>';
+      html+='<div><label class="lbl">地區</label><select onchange="qItem.rg=this.value">'+REGIONS.map(r=>'<option'+(qItem.rg===r?' selected':'')+'>'+r+'</option>').join('')+'</select></div>';
+      html+='<div><label class="lbl">服務</label><select onchange="qItem.sv=this.value">'+SERVICES.map(s=>'<option'+(qItem.sv===s?' selected':'')+'>'+s+'</option>').join('')+'</select></div></div>';
+      html+='<div style="margin-bottom:9px"><label class="lbl">問題</label><input type="text" value="'+esc(qItem.q)+'" oninput="qItem.q=this.value"></div>';
+      html+='<div style="margin-bottom:12px"><label class="lbl">標準回答</label><textarea style="min-height:75px" oninput="qItem.a=this.value">'+esc(qItem.a)+'</textarea></div>';
+      html+='<div style="display:flex;gap:7px"><button class="btn btn-pri" onclick="saveQuickAdd()">✅ 儲存</button><button class="btn btn-def" onclick="qAdd=false;renderSearch()">取消</button></div></div>';
+    }
+  }
+
+  body.innerHTML=html;
+}
+
+// ── 渲染資料庫 ────────────────────────────────────────────
+function renderDB(){
+  const body=document.getElementById('mainBody');
+  const catCounts={};
+  qaList.forEach(q=>{catCounts[q.cat]=(catCounts[q.cat]||0)+1;});
+  const filtered=qaList.filter(q=>(fCat==='全部'||q.cat===fCat)&&(fRg==='全部'||q.rg===fRg)&&(fSv==='全部'||q.sv===fSv)&&(!srch||(q.q||'').includes(srch)||(q.a||'').includes(srch)));
+
+  let html='<div style="display:flex;gap:9px;margin-bottom:14px;flex-wrap:wrap">';
+  html+='<div class="card" style="flex:1;min-width:70px;margin-bottom:0;text-align:center;padding:12px"><div style="font-size:20px;font-weight:700;color:var(--priL)">'+qaList.length+'</div><div style="font-size:11px;color:var(--txM)">總問答</div></div>';
+  Object.entries(catCounts).slice(0,6).forEach(([cat,n])=>{
+    html+='<div class="card" style="flex:1;min-width:60px;margin-bottom:0;text-align:center;padding:12px"><div style="font-size:17px;font-weight:700;color:var(--priL)">'+n+'</div><div style="font-size:10px;color:var(--txM)">'+cat+'</div></div>';
+  });
+  html+='</div>';
+
+  html+='<div style="display:flex;justify-content:space-between;margin-bottom:11px;gap:8px">';
+  html+='<input type="text" style="max-width:190px" placeholder="🔍 搜尋..." value="'+esc(srch)+'" oninput="srch=this.value;renderDB()">';
+  html+='<button class="btn btn-pri" onclick="showAdd=!showAdd;editQ=null;renderDB()">'+(showAdd?'✖ 取消':'＋ 新增問答')+'</button></div>';
+
+  if(showAdd){
+    html+='<div class="card" style="border:1.5px solid var(--acc)">';
+    html+='<div style="font-size:13px;font-weight:700;color:var(--priL);margin-bottom:12px">新增問答</div>';
+    html+='<div style="display:flex;gap:8px;margin-bottom:9px;flex-wrap:wrap">';
+    html+='<div><label class="lbl">分類</label><select onchange="newQ.cat=this.value">'+CATS.filter(c=>c!=='全部').map(c=>'<option'+(newQ.cat===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>';
+    html+='<div><label class="lbl">地區</label><select onchange="newQ.rg=this.value">'+REGIONS.map(r=>'<option'+(newQ.rg===r?' selected':'')+'>'+r+'</option>').join('')+'</select></div>';
+    html+='<div><label class="lbl">服務</label><select onchange="newQ.sv=this.value">'+SERVICES.map(s=>'<option'+(newQ.sv===s?' selected':'')+'>'+s+'</option>').join('')+'</select></div></div>';
+    html+='<div style="margin-bottom:9px"><label class="lbl">問題</label><input type="text" oninput="newQ.q=this.value" value="'+esc(newQ.q)+'"></div>';
+    html+='<div style="margin-bottom:12px"><label class="lbl">回答</label><textarea oninput="newQ.a=this.value">'+esc(newQ.a)+'</textarea></div>';
+    html+='<div style="display:flex;gap:7px;justify-content:flex-end"><button class="btn btn-def" onclick="showAdd=false;renderDB()">取消</button>';
+    html+='<button class="btn btn-pri" onclick="if(newQ.q.trim()&&newQ.a.trim()){saveQA([...qaList,{...newQ,id:Date.now()}]).then(()=>{newQ={cat:\'其他\',rg:\'通用\',sv:\'通用\',q:\'\',a:\'\'};showAdd=false;renderDB();})}">✅ 儲存</button></div></div>';
+  }
+
+  html+='<div class="frow">'+CATS.map(c=>'<button class="fbtn'+(fCat===c?' active':'')+'" onclick="fCat=\''+c+'\';renderDB()">'+c+(c!=='全部'&&catCounts[c]?' ('+catCounts[c]+')':'')+'</button>').join('')+'</div>';
+  html+='<div class="frow">'+['全部','通用','台中','台北'].map(r=>'<button class="fbtn'+(fRg===r?' active':'')+'" onclick="fRg=\''+r+'\';renderDB()">'+r+'</button>').join('');
+  html+='<div style="width:1px;height:22px;background:var(--bd);margin:0 3px"></div>';
+  html+=[ '全部','通用','鍍膜','貼膜'].map(s=>'<button class="fbtn'+(fSv===s?' active':'')+'" onclick="fSv=\''+s+'\';renderDB()">'+s+'</button>').join('')+'</div>';
+
+  filtered.forEach(q=>{
+    html+='<div class="row">';
+    if(editQ&&editQ.id===q.id){
+      html+='<div style="flex:1"><div style="display:flex;gap:7px;margin-bottom:8px;flex-wrap:wrap">';
+      html+='<select onchange="editQ.cat=this.value">'+CATS.filter(c=>c!=='全部').map(c=>'<option'+(editQ.cat===c?' selected':'')+'>'+c+'</option>').join('')+'</select>';
+      html+='<select onchange="editQ.rg=this.value">'+REGIONS.map(r=>'<option'+(editQ.rg===r?' selected':'')+'>'+r+'</option>').join('')+'</select>';
+      html+='<select onchange="editQ.sv=this.value">'+SERVICES.map(s=>'<option'+(editQ.sv===s?' selected':'')+'>'+s+'</option>').join('')+'</select></div>';
+      html+='<input type="text" style="margin-bottom:7px" value="'+esc(editQ.q)+'" oninput="editQ.q=this.value">';
+      html+='<textarea style="min-height:65px" oninput="editQ.a=this.value">'+esc(editQ.a)+'</textarea>';
+      html+='<div style="display:flex;gap:7px;margin-top:9px">';
+      html+='<button class="btn btn-pri" onclick="saveQA(qaList.map(x=>x.id===editQ.id?editQ:x)).then(()=>{editQ=null;renderDB();})">✅ 儲存</button>';
+      html+='<button class="btn btn-def" onclick="editQ=null;renderDB()">取消</button></div></div>';
+    } else {
+      html+='<div style="flex:1;min-width:0">';
+      html+='<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;flex-wrap:wrap">';
+      html+='<span class="tag tag-db">'+esc(q.cat)+'</span>';
+      html+='<span class="pill" style="'+rgStyle(q.rg)+'">'+q.rg+'</span>';
+      html+='<span class="pill" style="'+svStyle(q.sv)+'">'+q.sv+'</span>';
+      html+='<span style="font-size:13px;font-weight:600;color:var(--tx);margin-left:3px">'+esc(q.q)+'</span></div>';
+      html+='<div style="font-size:13px;color:var(--txS);line-height:1.6">'+esc(q.a)+'</div></div>';
+      html+='<div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0">';
+      html+='<button class="btn btn-def btn-sm" onclick="editQ=JSON.parse(JSON.stringify(qaList.find(x=>x.id==='+q.id+')));showAdd=false;renderDB()">✏️</button>';
+      html+='<button class="btn btn-danger btn-sm" onclick="if(confirm(\'確定刪除？\'))saveQA(qaList.filter(x=>x.id!=='+q.id+')).then(()=>renderDB())">🗑️</button></div>';
+    }
+    html+='</div>';
+  });
+  if(filtered.length===0)html+='<div style="text-align:center;padding:40px;color:var(--txM)">這個篩選條件沒有問答</div>';
+  body.innerHTML=html;
+}
+
+// ── 回訪 ─────────────────────────────────────────────────
+function getReminders(fu){
+  if(!fu.date)return[];
+  return FU_DAYS.map(d=>{
+    const dt=new Date(fu.date);dt.setDate(dt.getDate()+d);
+    const ds=dt.toISOString().split('T')[0];
+    const done=(fu.done||[]).includes(d);
+    return{day:d,ds,done,overdue:!done&&ds<TODAY,isToday:!done&&ds===TODAY};
+  });
+}
+
+function renderFollowup(){
+  const body=document.getElementById('mainBody');
+  const todayFus=fus.filter(fu=>getReminders(fu).some(r=>r.isToday||r.overdue));
+  let html='';
+
+  if(todayFus.length>0){
+    html+='<div style="background:#fff8e1;border:1.5px solid #f9d79b;border-radius:12px;padding:14px;margin-bottom:14px">';
+    html+='<div style="font-size:14px;font-weight:700;color:var(--gld);margin-bottom:9px">🔔 今日待辦（'+todayFus.length+' 筆）</div>';
+    todayFus.forEach(fu=>{
+      html+='<div style="font-size:13px;color:var(--tx);padding:5px 0;border-bottom:1px solid #f0d080">';
+      html+='<span style="font-weight:600">'+esc(fu.name)+'</span>';
+      html+='<span class="pill" style="'+rgStyle(fu.rg)+'">'+fu.rg+'</span>';
+      html+='<span style="color:var(--txS);margin-left:6px">'+getReminders(fu).filter(r=>r.isToday||r.overdue).map(r=>FU_LABELS[r.day]).join('、')+'</span></div>';
+    });
+    html+='</div>';
+  }
+
+  html+='<div style="display:flex;justify-content:space-between;margin-bottom:13px;gap:8px">';
+  html+='<div class="frow" style="margin-bottom:0">'+['待處理','全部'].map(f=>'<button class="fbtn'+(fuF===f?' active':'')+'" onclick="fuF=\''+f+'\';renderFollowup()">'+f+'</button>').join('')+'</div>';
+  html+='<button class="btn btn-pri" onclick="showAddFu=!showAddFu;renderFollowup()">'+(showAddFu?'✖ 取消':'＋ 新增回訪')+'</button></div>';
+
+  if(showAddFu){
+    html+='<div class="card" style="border:1.5px solid var(--acc)">';
+    html+='<div style="font-size:13px;font-weight:700;color:var(--priL);margin-bottom:12px">新增回訪追蹤</div>';
+    html+='<div style="display:flex;gap:9px;margin-bottom:9px;flex-wrap:wrap">';
+    html+='<div style="flex:2"><label class="lbl">客戶姓名</label><input type="text" placeholder="例：王太太" oninput="newFu.name=this.value" value="'+esc(newFu.name)+'"></div>';
+    html+='<div><label class="lbl">地區</label><select onchange="newFu.rg=this.value">'+['台中','台北'].map(r=>'<option'+(newFu.rg===r?' selected':'')+'>'+r+'</option>').join('')+'</select></div>';
+    html+='<div><label class="lbl">服務</label><select onchange="newFu.sv=this.value">'+['鍍膜','貼膜'].map(s=>'<option'+(newFu.sv===s?' selected':'')+'>'+s+'</option>').join('')+'</select></div></div>';
+    html+='<div style="display:flex;gap:9px;margin-bottom:9px;flex-wrap:wrap">';
+    html+='<div style="flex:1"><label class="lbl">施作完工日期</label><input type="date" value="'+esc(newFu.date)+'" onchange="newFu.date=this.value"></div>';
+    html+='<div style="flex:2"><label class="lbl">備註</label><input type="text" placeholder="例：全室鍍膜、特別關注廚房" oninput="newFu.notes=this.value" value="'+esc(newFu.notes)+'"></div></div>';
+    html+='<div style="display:flex;gap:7px;justify-content:flex-end">';
+    html+='<button class="btn btn-def" onclick="showAddFu=false;renderFollowup()">取消</button>';
+    html+='<button class="btn btn-pri" onclick="if(newFu.name.trim()&&newFu.date){saveFu([{...newFu,id:Date.now(),done:[]},  ...fus]).then(()=>{newFu={name:\'\',rg:\'台中\',sv:\'鍍膜\',date:\'\',notes:\'\'};showAddFu=false;renderFollowup();})}">✅ 儲存</button></div></div>';
+  }
+
+  fus.filter(fu=>{
+    if(fuF!=='待處理')return true;
+    return getReminders(fu).some(r=>!r.done&&r.ds<=TODAY);
+  }).forEach(fu=>{
+    const reminders=getReminders(fu);
+    html+='<div class="card" style="border-left:3px solid '+(fu.rg==='台中'?'#f0d080':'#aed6f1')+'">';
+    html+='<div style="display:flex;justify-content:space-between;align-items:flex-start">';
+    html+='<div style="flex:1">';
+    html+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;flex-wrap:wrap">';
+    html+='<span style="font-size:14px;font-weight:700;color:var(--tx)">'+esc(fu.name)+'</span>';
+    html+='<span class="pill" style="'+rgStyle(fu.rg)+'">'+fu.rg+'</span>';
+    html+='<span class="pill" style="'+svStyle(fu.sv)+'">'+fu.sv+'</span></div>';
+    html+='<div style="font-size:12px;color:var(--txS);margin-bottom:8px">完工：'+esc(fu.date)+(fu.notes?' · '+esc(fu.notes):'')+'</div>';
+    html+='<div style="display:flex;gap:5px;flex-wrap:wrap">';
+    reminders.forEach(r=>{
+      const bg=r.done?'#f0f0f0':r.overdue?'var(--danB)':r.isToday?'var(--gldB)':'var(--accL)';
+      const cl=r.done?'var(--txM)':r.overdue?'var(--dan)':r.isToday?'var(--gld)':'var(--priL)';
+      const bd=r.done?'#ddd':r.overdue?'#f5c6c6':r.isToday?'#f0d080':'var(--acc)';
+      html+='<div style="padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px;background:'+bg+';color:'+cl+';border:1px solid '+bd+'">';
+      html+=(r.done?'✅':r.overdue?'⚠️':r.isToday?'🔔':'⏳')+' '+FU_LABELS[r.day];
+      if(!r.done&&(r.isToday||r.overdue)){
+        html+='<button onclick="saveFu(fus.map(x=>x.id==='+fu.id+'?{...x,done:[...(x.done||[]),'+r.day+']}:x)).then(()=>renderFollowup())" style="margin-left:3px;padding:1px 5px;border-radius:9px;border:1px solid '+(r.overdue?'var(--dan)':'var(--gld)')+';background:transparent;cursor:pointer;font-size:10px;color:'+(r.overdue?'var(--dan)':'var(--gld)')+';font-family:inherit">完成</button>';
+      }
+      html+='</div>';
+    });
+    html+='</div></div>';
+    html+='<button class="btn btn-danger btn-sm" onclick="if(confirm(\'確定刪除？\'))saveFu(fus.filter(x=>x.id!=='+fu.id+')).then(()=>renderFollowup())">🗑️</button></div></div>';
+  });
+
+  if(fus.length===0)html+='<div style="text-align:center;padding:48px;color:var(--txM)"><div style="font-size:30px;margin-bottom:10px">📋</div><div>還沒有回訪紀錄</div></div>';
+  body.innerHTML=html;
+}
+
+// ── 品牌知識 ──────────────────────────────────────────────
+function renderKnowledge(){
+  const body=document.getElementById('mainBody');
+  let html='<div class="card" style="background:var(--aiB);border:1.5px solid #aed6f1;font-size:13px;color:var(--ai);line-height:1.7">';
+  html+='📘 <strong>品牌知識庫</strong> — 這裡的知識會在每次 AI 回答時自動帶入。發現 AI 說錯了？直接新增或修正，AI 馬上就會學到正確答案。所有修改都會同步到雲端，所有客服立即生效。</div>';
+
+  html+='<div style="display:flex;justify-content:space-between;margin-bottom:13px">';
+  html+='<div style="font-size:14px;color:var(--txS)">'+kn.length+' 條知識</div>';
+  html+='<button class="btn btn-pri" onclick="showAddKn=!showAddKn;editKn=null;renderKnowledge()">'+(showAddKn?'✖ 取消':'＋ 新增知識')+'</button></div>';
+
+  if(showAddKn){
+    html+='<div class="card" style="border:1.5px solid #aed6f1">';
+    html+='<div style="font-size:13px;font-weight:700;color:var(--ai);margin-bottom:12px">新增品牌知識</div>';
+    html+='<div style="display:flex;gap:9px;margin-bottom:9px;flex-wrap:wrap">';
+    html+='<div><label class="lbl">分類</label><select onchange="newKn.cat=this.value">'+KN_CATS.map(c=>'<option'+(newKn.cat===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>';
+    html+='<div style="flex:1"><label class="lbl">知識標題</label><input type="text" placeholder="例：貼膜無隔熱功能" oninput="newKn.title=this.value" value="'+esc(newKn.title)+'"></div></div>';
+    html+='<div style="margin-bottom:12px"><label class="lbl">詳細說明（AI 會完全遵守這段內容）</label>';
+    html+='<textarea style="min-height:75px" placeholder="例：我們的貼膜只適用於浴室玻璃，沒有隔熱功能。" oninput="newKn.content=this.value">'+esc(newKn.content)+'</textarea></div>';
+    html+='<div style="display:flex;gap:7px;justify-content:flex-end"><button class="btn btn-def" onclick="showAddKn=false;renderKnowledge()">取消</button>';
+    html+='<button class="btn btn-pri" onclick="if(newKn.title.trim()&&newKn.content.trim()){saveKn([...kn,{...newKn,id:Date.now()}]).then(()=>{newKn={cat:\'產品規格\',title:\'\',content:\'\'};showAddKn=false;renderKnowledge();})}">✅ 儲存</button></div></div>';
+  }
+
+  kn.forEach(k=>{
+    html+='<div class="row" style="border-left:3px solid #aed6f1">';
+    if(editKn&&editKn.id===k.id){
+      html+='<div style="flex:1"><div style="display:flex;gap:7px;margin-bottom:8px;flex-wrap:wrap">';
+      html+='<select onchange="editKn.cat=this.value">'+KN_CATS.map(c=>'<option'+(editKn.cat===c?' selected':'')+'>'+c+'</option>').join('')+'</select>';
+      html+='<input type="text" style="flex:1" value="'+esc(editKn.title)+'" oninput="editKn.title=this.value"></div>';
+      html+='<textarea style="min-height:65px" oninput="editKn.content=this.value">'+esc(editKn.content)+'</textarea>';
+      html+='<div style="display:flex;gap:7px;margin-top:9px">';
+      html+='<button class="btn btn-pri" onclick="saveKn(kn.map(x=>x.id===editKn.id?editKn:x)).then(()=>{editKn=null;renderKnowledge();})">✅ 儲存</button>';
+      html+='<button class="btn btn-def" onclick="editKn=null;renderKnowledge()">取消</button></div></div>';
+    } else {
+      html+='<div style="flex:1;min-width:0">';
+      html+='<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px">';
+      html+='<span style="background:var(--aiB);color:var(--ai);border:1px solid #aed6f1;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:600">'+esc(k.cat)+'</span>';
+      html+='<span style="font-size:13px;font-weight:700;color:var(--tx)">'+esc(k.title)+'</span></div>';
+      html+='<div style="font-size:13px;color:var(--txS);line-height:1.6">'+esc(k.content)+'</div></div>';
+      html+='<div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0">';
+      html+='<button class="btn btn-def btn-sm" onclick="editKn=JSON.parse(JSON.stringify(kn.find(x=>x.id==='+k.id+')));showAddKn=false;renderKnowledge()">✏️</button>';
+      html+='<button class="btn btn-danger btn-sm" onclick="if(confirm(\'確定刪除這條知識？\'))saveKn(kn.filter(x=>x.id!=='+k.id+')).then(()=>renderKnowledge())">🗑️</button></div>';
+    }
+    html+='</div>';
+  });
+
+  if(kn.length===0)html+='<div style="text-align:center;padding:48px;color:var(--txM)"><div style="font-size:30px;margin-bottom:10px">📘</div><div>還沒有品牌知識</div></div>';
+  body.innerHTML=html;
+}
+
+// ── 數據 ─────────────────────────────────────────────────
+function renderDashboard(){
+  const body=document.getElementById('mainBody');
+  const total=stats.length;
+  const success=stats.filter(s=>s.outcome==='success').length;
+  const cont=stats.filter(s=>s.outcome==='continue').length;
+  const noR=stats.filter(s=>s.outcome==='no_reply').length;
+  const rate=total>0?Math.round(success/total*100):0;
+  const topQ=Object.entries(stats.reduce((acc,s)=>{acc[s.q]=(acc[s.q]||0)+1;return acc;},{})).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const rgSt=stats.reduce((acc,s)=>{acc[s.rg]=(acc[s.rg]||0)+1;return acc;},{});
+
+  let html='<div class="grid4">';
+  [{lbl:'總查詢次數',val:total,icon:'🔍',cl:'var(--priL)'},{lbl:'成交記錄',val:success,icon:'✅',cl:'var(--ok)'},{lbl:'繼續在談',val:cont,icon:'💬',cl:'var(--wa)'},{lbl:'沒有回應',val:noR,icon:'❌',cl:'var(--dan)'},{lbl:'有回報成交率',val:total>0?rate+'%':'–',icon:'📈',cl:'var(--priL)'},{lbl:'品牌知識',val:kn.length,icon:'📘',cl:'var(--ai)'},{lbl:'資料庫筆數',val:qaList.length,icon:'📚',cl:'var(--priL)'}].forEach(item=>{
+    html+='<div class="stat-card"><div style="font-size:24px">'+item.icon+'</div><div style="font-size:22px;font-weight:800;color:'+item.cl+';margin:4px 0">'+item.val+'</div><div style="font-size:11px;color:var(--txM)">'+item.lbl+'</div></div>';
+  });
+  html+='</div>';
+
+  html+='<div class="card"><div style="font-size:14px;font-weight:700;color:var(--tx);margin-bottom:11px">📍 地區查詢分布</div>';
+  if(Object.keys(rgSt).length===0){html+='<div style="color:var(--txM);font-size:13px">還沒有查詢紀錄</div>';}
+  else{Object.entries(rgSt).forEach(([r,n])=>{html+='<div style="display:flex;align-items:center;gap:9px;margin-bottom:7px"><span style="width:38px;font-size:13px;color:var(--txS)">'+r+'</span><div style="flex:1;height:18px;background:#f0ece4;border-radius:9px;overflow:hidden"><div style="width:'+Math.round(n/total*100)+'%;height:100%;background:var(--priL);border-radius:9px"></div></div><span style="width:28px;font-size:13px;color:var(--tx);text-align:right">'+n+'</span></div>';});}
+  html+='</div>';
+
+  html+='<div class="card"><div style="font-size:14px;font-weight:700;color:var(--tx);margin-bottom:11px">🔥 最常被查的問題 Top 10</div>';
+  if(topQ.length===0){html+='<div style="color:var(--txM);font-size:13px">還沒有查詢紀錄</div>';}
+  else{topQ.forEach(([q,n],i)=>{html+='<div style="display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--bd)"><span style="font-size:13px;font-weight:700;color:'+(i<3?'var(--gld)':'var(--txM)')+';width:18px">'+(i+1)+'</span><span style="flex:1;font-size:13px;color:var(--tx)">'+(q.length>45?q.slice(0,45)+'...':q)+'</span><span style="font-size:12px;color:var(--txS);background:#f0ece4;padding:2px 7px;border-radius:11px">'+n+'次</span></div>';});}
+  html+='</div>';
+
+  html+='<div style="text-align:right;margin-top:6px"><button class="btn btn-danger btn-sm" onclick="if(confirm(\'確定清除所有統計數據？\')){saveSt([]).then(()=>renderDashboard())}">🗑️ 清除統計數據</button></div>';
+  body.innerHTML=html;
+}
+
+// ── 啟動 ─────────────────────────────────────────────────
+init();
+</script>
+
+</body></html>
